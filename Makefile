@@ -18,7 +18,7 @@ $(NAME): $(OBJ)
 	$(CC) $(CFLAGS) -c $< -o $@
 
 test: $(NAME) $(TEST_SRC)
-	$(CC) $(CFLAGS) $(TEST_SRC) ./$(NAME) -o $(TEST_BIN)
+	$(CC) $(CFLAGS) -g -O0 $(TEST_SRC) ./$(NAME) -o $(TEST_BIN)
 	./$(TEST_BIN)
 
 # Remove object files

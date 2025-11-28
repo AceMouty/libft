@@ -1,13 +1,16 @@
 #include "check.h"
 #include "libft.h"
 #include <assert.h>
-#include <string.h>
+#include <bsd/string.h>
 #include <unistd.h>
 
 int main(void) {
   char src[] = "coucou";
   char dest[10];
 
+  // ===================================
+  // ft_strlcpy
+  // ===================================
   memset(dest, 'A', 10);
 
   /* 1 */ check(ft_strlcpy(dest, src, 0) == strlen(src) && dest[0] == 'A');
@@ -40,6 +43,18 @@ int main(void) {
   /* 9 */ check(ft_strlcpy(dest, "1", 0) == 1 && dest[0] == 0);
 
   memset(dest, 'A', 10);
+
+  // ===================================
+  // ft_strlcat
+  // ===================================
+  char str[] = " world";
+  char buff[12];
+  strlcpy(buff, "Hello", 6);
+  printf("Buff: %s\n", buff);
+
+  strlcat(buff, str, 12);
+  printf("Buff: %d\n", buff[ft_strlen(buff) + 1]);
+
   write(1, "\n", 1);
   return 0;
 }
