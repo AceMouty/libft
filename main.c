@@ -161,5 +161,51 @@ int main(void) {
   /* 9: EOF must be returned unchanged */
   check(ft_tolower(EOF) == tolower(EOF));
 
+  printf("===================================\n");
+  printf("ft_strchr\n");
+  printf("===================================\n");
+  char s1[] = "hello";
+  char s2[] = "abcabc";
+  char s3[] = "";
+  char s4[] = "end?";
+  char s5[] = "null\0inside"; // just to make intent clear
+
+  /* 1: char at beginning */
+  /* "hello" -> 'h' at index 0 */
+  /* 1 */ check(ft_strchr(s1, 'h') == strchr(s1, 'h'));
+
+  /* 2: char in the middle */
+  /* "hello" -> 'l' first at index 2 */
+  /* 2 */ check(ft_strchr(s1, 'l') == strchr(s1, 'l'));
+
+  /* 3: char at the end */
+  /* "end?" -> '?' at last position */
+  /* 3 */ check(ft_strchr(s4, '?') == strchr(s4, '?'));
+
+  /* 4: char not present at all */
+  /* "hello" -> 'z' not found, should return NULL */
+  /* 4 */ check(ft_strchr(s1, 'z') == strchr(s1, 'z'));
+
+  /* 5: multiple occurrences -> must return first one */
+  /* "abcabc" -> 'b' at index 1, not 4 */
+  /* 5 */ check(ft_strchr(s2, 'b') == strchr(s2, 'b'));
+
+  /* 6: search for '\0' terminator */
+  /* should return pointer to the terminating NUL */
+  /* 6 */ check(ft_strchr(s1, '\0') == strchr(s1, '\0'));
+
+  /* 7: empty string, search for '\0' */
+  /* should return pointer to s3 (first byte, which is '\0') */
+  /* 7 */ check(ft_strchr(s3, '\0') == strchr(s3, '\0'));
+
+  /* 8: empty string, search for non-existing char */
+  /* should return NULL on both */
+  /* 8 */ check(ft_strchr(s3, 'x') == strchr(s3, 'x'));
+
+  /* 9: non-alphanumeric character in the middle */
+  /* "null\0inside" – note: strchr stops at first '\0', */
+  /* so searching for 'i' should NOT find anything here */
+  /* 9 */ check(ft_strchr(s5, 'i') == strchr(s5, 'i'));
+
   return 0;
 }
