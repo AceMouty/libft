@@ -207,5 +207,46 @@ int main(void) {
   /* so searching for 'i' should NOT find anything here */
   /* 9 */ check(ft_strchr(s5, 'i') == strchr(s5, 'i'));
 
+  printf("===================================\n");
+  printf("ft_strrchr\n");
+  printf("===================================\n");
+  char s6[] = "a\0b"; /* 'b' is after the NUL, so invisible to strrchr */
+
+  /* 1: char at beginning (only occurrence) */
+  /* "hello" -> last 'h' at index 0 */
+  /* 1 */ check(ft_strrchr(s1, 'h') == strrchr(s1, 'h'));
+
+  /* 2: char in the middle with multiple occurrences -> last one */
+  /* "hello" -> 'l' at index 3 (not 2) */
+  /* 2 */ check(ft_strrchr(s1, 'l') == strrchr(s1, 'l'));
+
+  /* 3: char at the end */
+  /* "end?" -> '?' last character */
+  /* 3 */ check(ft_strrchr(s4, '?') == strrchr(s4, '?'));
+
+  /* 4: multiple occurrences in longer string */
+  /* "abcabc" -> last 'b' at index 4 */
+  /* 4 */ check(ft_strrchr(s2, 'b') == strrchr(s2, 'b'));
+
+  /* 5: char not present at all */
+  /* "abcabc" -> 'x' not found → NULL */
+  /* 5 */ check(ft_strrchr(s2, 'x') == strrchr(s2, 'x'));
+
+  /* 6: all same char, last one at the end */
+  /* "aaaa" -> 'a' should point to last char (index 3) */
+  /* 6 */ check(ft_strrchr(s5, 'a') == strrchr(s5, 'a'));
+
+  /* 7: search for '\0' terminator in non-empty string */
+  /* should return pointer to terminating NUL */
+  /* 7 */ check(ft_strrchr(s1, '\0') == strrchr(s1, '\0'));
+
+  /* 8: empty string, search for '\0' */
+  /* should return pointer to s3 (first byte, which is '\0') */
+  /* 8 */ check(ft_strrchr(s3, '\0') == strrchr(s3, '\0'));
+
+  /* 9: embedded NUL: search past it should fail */
+  /* "a\0b" -> 'b' is after NUL, so strrchr should return NULL */
+  /* 9 */ check(ft_strrchr(s6, 'b') == strrchr(s6, 'b'));
+
   return 0;
 }
