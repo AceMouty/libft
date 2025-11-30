@@ -6,6 +6,8 @@
 #include <unistd.h>
 
 void ft_memcmp_test();
+void ft_strnstr_test();
+char *strnstr(const char *big, const char *small, size_t len);
 
 int main(void) {
   char src[] = "coucou";
@@ -295,6 +297,7 @@ int main(void) {
   /* 9 */ check(ft_memchr(m3, 0x80, 4) == memchr(m3, 0x80, 4));
 
   ft_memcmp_test();
+  ft_strnstr_test();
   return 0;
 }
 
@@ -403,4 +406,44 @@ void ft_memcmp_test() {
     /* 9 */ check((res == 0 && expected == 0) || (res < 0 && expected < 0) ||
                   (res > 0 && expected > 0));
   }
+}
+
+void ft_strnstr_test() {
+  printf("===================================\n");
+  printf("ft_strnstr\n");
+  printf("===================================\n");
+
+  char big1[] = "hello world";
+  char big2[] = "foo bar baz";
+  char big3[] = "aaaaa";
+  char big4[] = "short";
+  char empty[] = "";
+  char big5[] = "abcde";
+
+  /* 1: basic match fully inside len */
+  /* 1 */ check(ft_strnstr(big1, "world", 11) == &big1[6]);
+
+  /* 2: len too small to reach the whole match -> NULL */
+  /* 2 */ check(ft_strnstr(big1, "world", 10) == NULL);
+
+  /* 3: match at the beginning */
+  /* 3 */ check(ft_strnstr(big2, "foo", 11) == &big2[0]);
+
+  /* 4: needle not present at all -> NULL */
+  /* 4 */ check(ft_strnstr(big2, "xyz", 11) == NULL);
+
+  /* 5: overlapping / repeated chars */
+  /* 5 */ check(ft_strnstr(big3, "aaa", 5) == &big3[0]);
+
+  /* 6: overlapping, but len cuts it off so no full match */
+  /* 6 */ check(ft_strnstr(big3, "aaa", 2) == NULL);
+
+  /* 7: empty needle: must return haystack, even if len = 0 */
+  /* 7 */ check(ft_strnstr(big4, "", 0) == big4);
+
+  /* 8: empty haystack, non-empty needle -> NULL */
+  /* 8 */ check(ft_strnstr(empty, "x", 1) == NULL);
+
+  /* 9: match that ends exactly at len boundary */
+  /* 9 */ check(ft_strnstr(big5, "de", 5) == &big5[3]);
 }
