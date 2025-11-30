@@ -2,11 +2,6 @@
 #include <stdint.h>
 
 size_t ft_strlcat(char *dest, const char *src, size_t size) {
-  unsigned int srclen;
-  unsigned int destlen;
-  unsigned int s_idx;
-  unsigned int d_idx;
-
   /*
    * dest: [h e l l o . . . . . . . . . . ]
    *  src: [_ w o r l d \]
@@ -17,31 +12,45 @@ size_t ft_strlcat(char *dest, const char *src, size_t size) {
    * [_ w o r l d \]
    *  ^
    * s_idx
+   *
+   * - Append src to the end of dest, but write at most destsize - 1 chars total
+   *   into dst (including the original content of dst).
+   *
+   * - Always NUL-terminate (if dstsize is not 0 and dst is NUL-terminated).
+   *
+   * - Return the length of the string it tried to create, i.e.
+   *    - If dstsize > strlen(dst): strlen(dst) + strlen(src)
+   *    - If dstsize <= strlen(dst): dstsize + strlen(src)
+   *      (this indicates truncation happened)
    */
-  if (!src || !dest) {
-    return 0;
+  unsigned int slen;
+  unsigned int dlen;
+  int i;
+
+  slen = ft_strlen(src);
+  dlen = 0;
+
+  // find dlen but dont go past size
+  while (dlen < size && dest[dlen] != '\0') {
+    dlen++;
   }
 
-  srclen = ft_strlen(src);
-  if (size == 0) {
-    return srclen + size;
+  // if we "consumed" size bytes without seeing \0
+  // dest isnt a proper C string
+  if (dlen == size) {
+    return size + slen;
   }
 
-  destlen = ft_strlen(dest);
-  d_idx = srclen;
-  s_idx = 0;
-  while (d_idx < size - 1 && src[s_idx]) {
-    dest[d_idx] = src[s_idx];
-    s_idx++;
-    d_idx++;
+  // start appending at the end of dest
+  i = 0;
+  // copy while we have room for at least one more char + '\0'
+  while (src[i] && (dlen + i) < (size - 1)) {
+    dest[dlen + i] = src[i];
+    i++;
   }
 
-  if (d_idx < size)
-    dest[d_idx + 1] = '\0';
+  if (dlen + i < size)
+    dest[dlen + i] = '\0';
 
-  if (size < destlen) {
-    return srclen + size;
-  }
-
-  return srclen;
+  return dlen + slen;
 }

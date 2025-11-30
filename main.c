@@ -44,17 +44,85 @@ int main(void) {
 
   memset(dest, 'A', 10);
 
-  // ===================================
-  // ft_strlcat
-  // ===================================
-  char str[] = " world";
-  char buff[12];
-  strlcpy(buff, "Hello", 6);
-  printf("Buff: %s\n", buff);
+  printf("===================================\n");
+  printf("ft_strlcat\n");
+  printf("===================================\n");
 
-  strlcat(buff, str, 12);
-  printf("Buff: %d\n", buff[ft_strlen(buff) + 1]);
+  int res;
+  int expected;
+  /* set src and dest initial content */
+  memset(dest, 'A', 10);
+  dest[0] = 0; /* so dest="" initially */
 
-  write(1, "\n", 1);
+  /* 1: size = 0 → nothing appended, return strlen(src) */
+  check(ft_strlcat(dest, src, 0) == strlen(src) && dest[0] == 0);
+
+  memset(dest, 'A', 10);
+  dest[0] = 0;
+
+  /* 2: size = 1 → can only NUL-terminate; return strlen(src) */
+  res = ft_strlcat(dest, src, 1);
+  expected = strlen(src);
+  printf("res: %d | expected: %d | dest[1]: %c\n", res, expected, dest[1]);
+
+  check(res == expected && dest[0] == 0 && dest[1] == 'A');
+
+  memset(dest, 'A', 10);
+  strcpy(dest, "c");
+
+  /* 3: size = 2 → dest="c"; room for 1 byte + NUL */
+  /* result should be "c" + first char of src */
+  res = ft_strlcat(dest, src, 2);
+  expected = 1 + strlen(src);
+  printf("res: %d | expected: %d | dest[0]: %c | dest[1]: %c | src[0]: %c | "
+         "dest[2]: %d\n",
+         res, expected, dest[0], dest[1], src[0], dest[2]);
+  check(res == expected && dest[0] == 'c' && dest[1] == src[0] && dest[2] == 0);
+
+  memset(dest, 'A', 10);
+  strcpy(dest, "c");
+
+  /* 4: size = -1 → effectively huge; full concat */
+  /* dest becomes "c" + src entirely */
+  check(ft_strlcat(dest, src, (size_t)-1) == 1 + strlen(src) &&
+        !strcmp(dest, (char[]){'c', 0}) + !strcmp(dest + 1, src) &&
+        dest[1 + strlen(src) + 1] == 'A');
+
+  memset(dest, 'A', 10);
+  strcpy(dest, "Hello");
+
+  /* 5: size = 6 → dest="Hello" (len=5), room for 0 chars + NUL */
+  check(ft_strlcat(dest, src, 6) == 5 + strlen(src) &&
+        !memcmp(dest, "Hello", 6) && /* unchanged except NUL */
+        dest[5] == 0);
+
+  memset(dest, 'A', 10);
+  strcpy(dest, "Hello");
+
+  /* 6: size = 7 → dest len=5, room for 1 char + NUL */
+  check(ft_strlcat(dest, src, 7) == 5 + strlen(src) &&
+        !memcmp(dest, "Hello", 5) && dest[5] == src[0]);
+
+  memset(dest, 'A', 10);
+  strcpy(dest, "Hello");
+
+  /* 7: size = 8 → room for 2 chars + NUL */
+  check(ft_strlcat(dest, src, 8) == 5 + strlen(src) &&
+        !memcmp(dest, "Hello", 5) && !memcmp(dest + 5, src, 2));
+
+  memset(dest, 'A', 10);
+  dest[0] = 0;
+
+  /* 8: src="" → no change, return len(dest)=0 */
+  check(ft_strlcat(dest, "", 42) == 0 && !memcmp(dest, "", 1));
+
+  memset(dest, 0, 10);
+  strcpy(dest, "1");
+
+  /* 9: size = 0 → return size + strlen(src) = 0 + 1; no change */
+  check(ft_strlcat(dest, src, 0) == strlen("1") + strlen(src) &&
+        dest[0] == '1');
+
+  memset(dest, 'A', 10);
   return 0;
 }

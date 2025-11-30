@@ -17,9 +17,9 @@ $(NAME): $(OBJ)
 %.o: %.c libft.h
 	$(CC) $(CFLAGS) -c $< -o $@
 
-test: $(NAME) $(TEST_SRC)
-	$(CC) $(CFLAGS) -g -O0 $(TEST_SRC) ./$(NAME) -o $(TEST_BIN)
-	./$(TEST_BIN)
+test: CFLAGS += -g -O0
+test: fclean $(NAME) $(TEST_SRC)
+	$(CC) $(CFLAGS) $(TEST_SRC) ./$(NAME) -o $(TEST_BIN)
 
 # Remove object files
 clean:
