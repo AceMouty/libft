@@ -248,5 +248,48 @@ int main(void) {
   /* "a\0b" -> 'b' is after NUL, so strrchr should return NULL */
   /* 9 */ check(ft_strrchr(s6, 'b') == strrchr(s6, 'b'));
 
+  printf("===================================\n");
+  printf("ft_memchr\n");
+  printf("===================================\n");
+  char m1[] = "hello";
+  char m2[] = "abcabc";
+  unsigned char buf[] = {0, 1, 2, 3, 4, 5};
+  char m3[] = {'A', (char)0x80, 'B', 0};
+
+  /* 1: match at beginning */
+  /* "hello" -> 'h' in first 5 bytes */
+  /* 1 */ check(ft_memchr(m1, 'h', 5) == memchr(m1, 'h', 5));
+
+  /* 2: match in the middle */
+  /* "hello" -> first 'l' at index 2 */
+  /* 2 */ check(ft_memchr(m1, 'l', 5) == memchr(m1, 'l', 5));
+
+  /* 3: character not found */
+  /* "hello" -> 'z' not present */
+  /* 3 */ check(ft_memchr(m1, 'z', 5) == memchr(m1, 'z', 5));
+
+  /* 4: search for '\0' (terminator) */
+  /* "hello\0" -> '\0' at index 5, so n must be at least 6 */
+  /* 4 */ check(ft_memchr(m1, '\0', 6) == memchr(m1, '\0', 6));
+
+  /* 5: n == 0 → must always return NULL */
+  /* even though 'h' is at s1[0], we search 0 bytes */
+  /* 5 */ check(ft_memchr(m1, 'h', 0) == memchr(m1, 'h', 0));
+
+  /* 6: binary buffer: find 0 */
+  /* buf = {0,1,2,3,4,5} -> 0 at index 0 */
+  /* 6 */ check(ft_memchr(buf, 0, 6) == memchr(buf, 0, 6));
+
+  /* 7: binary buffer: find 3 in the middle */
+  /* buf = {0,1,2,3,4,5} -> 3 at index 3 */
+  /* 7 */ check(ft_memchr(buf, 3, 6) == memchr(buf, 3, 6));
+
+  /* 8: multiple occurrences: must return first one */
+  /* "abcabc" -> 'b' at index 1 (not 4) */
+  /* 8 */ check(ft_memchr(m2, 'b', 6) == memchr(m2, 'b', 6));
+
+  /* 9: high-bit byte: ensure unsigned-char behavior */
+  /* s3 = {'A', 0x80, 'B', 0} -> search for 0x80 */
+  /* 9 */ check(ft_memchr(m3, 0x80, 4) == memchr(m3, 0x80, 4));
   return 0;
 }
