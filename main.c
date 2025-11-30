@@ -300,7 +300,7 @@ int main(void) {
 
 void ft_memcmp_test() {
   printf("===================================\n");
-  printf("ft_memcmp_test\n");
+  printf("ft_memcmp\n");
   printf("===================================\n");
   int res;
   int expected;
