@@ -123,8 +123,9 @@ int main(void) {
   strcpy(dest, "1");
 
   /* 9: size = 0 → return size + strlen(src) = 0 + 1; no change */
-  check(ft_strlcat(dest, src, 0) == strlen("1") + strlen(src) &&
-        dest[0] == '1');
+  res = ft_strlcat(dest, src, 0);
+  expected = strlen("1") + strlen(src);
+  check(res == expected && dest[0] == '1');
 
   memset(dest, 'A', 10);
   return 0;
