@@ -119,7 +119,7 @@ int main(void) {
 
   /* 9: size = 0 → return size + strlen(src) = 0 + 1; no change */
   res = ft_strlcat(dest, src, 0);
-  expected = strlen("1") + strlen(src);
+  expected = strlen(src);
   check(res == expected && dest[0] == '1');
 
   memset(dest, 'A', 10);
