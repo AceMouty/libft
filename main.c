@@ -2,11 +2,13 @@
 #include "libft.h"
 #include <assert.h>
 #include <ctype.h>
+#include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
 
 void ft_memcmp_test();
 void ft_strnstr_test();
+void ft_atoi_test();
 char *strnstr(const char *big, const char *small, size_t len);
 
 int main(void) {
@@ -298,6 +300,7 @@ int main(void) {
 
   ft_memcmp_test();
   ft_strnstr_test();
+  ft_atoi_test();
   return 0;
 }
 
@@ -446,4 +449,58 @@ void ft_strnstr_test() {
 
   /* 9: match that ends exactly at len boundary */
   /* 9 */ check(ft_strnstr(big5, "de", 5) == &big5[3]);
+}
+
+void ft_atoi_test() {
+  printf("===================================\n");
+  printf("ft_atoi\n");
+  printf("===================================\n");
+
+  int res;
+  int expected;
+
+  /* 1: simple zero */
+  res = ft_atoi("0");
+  expected = atoi("0");
+  /* 1 */ check(res == expected);
+
+  /* 2: simple positive number */
+  res = ft_atoi("42");
+  expected = atoi("42");
+  /* 2 */ check(res == expected);
+
+  /* 3: simple negative number */
+  res = ft_atoi("-42");
+  expected = atoi("-42");
+  /* 3 */ check(res == expected);
+
+  /* 4: leading spaces */
+  res = ft_atoi("   1234");
+  expected = atoi("   1234");
+  /* 4 */ check(res == expected);
+
+  /* 5: mixed whitespace and negative sign */
+  res = ft_atoi("\t\n  -567");
+  expected = atoi("\t\n  -567");
+  /* 5 */ check(res == expected);
+
+  /* 6: explicit plus sign */
+  res = ft_atoi("+90");
+  expected = atoi("+90");
+  /* 6 */ check(res == expected);
+
+  /* 7: stops at first non-digit after digits */
+  res = ft_atoi("4193 with words");
+  expected = atoi("4193 with words");
+  /* 7 */ check(res == expected);
+
+  /* 8: no leading digits -> should return 0 */
+  res = ft_atoi("words 987");
+  expected = atoi("words 987");
+  /* 8 */ check(res == expected);
+
+  /* 9: large in-range value (INT_MAX on 32-bit) */
+  res = ft_atoi("2147483647");
+  expected = atoi("2147483647");
+  /* 9 */ check(res == expected);
 }
