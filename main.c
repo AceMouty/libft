@@ -77,10 +77,7 @@ int main(void) {
   /* result should be "c" + first char of src */
   res = ft_strlcat(dest, src, 2);
   expected = 1 + strlen(src);
-  printf("res: %d | expected: %d | dest[0]: %c | dest[1]: %c | src[0]: %c | "
-         "dest[2]: %d\n",
-         res, expected, dest[0], dest[1], src[0], dest[2]);
-  check(res == expected && dest[0] == 'c' && dest[1] == src[0] && dest[2] == 0);
+  check(res == expected && dest[0] == 'c' && dest[1] == '\0');
 
   memset(dest, 'A', 10);
   strcpy(dest, "c");

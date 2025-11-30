@@ -47,4 +47,30 @@ size_t ft_strlcat(char *dest, const char *src, size_t size) {
     dest[dlen + i] = '\0';
 
   return dlen + ft_strlen(src);
+  // size_t dlen;
+  // size_t slen;
+  // size_t space;
+  // size_t to_copy;
+  //
+  // slen = ft_strlen(src);
+  // dlen = ft_strlen(dest);
+  //
+  // if (size <= dlen) {
+  //   return size + slen;
+  // }
+  //
+  // space = size - dlen - 1;
+  //
+  // if (slen < space)
+  //   to_copy = slen;
+  // else
+  //   to_copy = space;
+  //
+  // if (to_copy > 0) {
+  //   ft_memcpy(dest + dlen, src, to_copy);
+  // }
+  //
+  // dest[dlen + to_copy] = '\0';
+  // /* Length we *tried* to build */
+  // return (dlen + slen);
 }
