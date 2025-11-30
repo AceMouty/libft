@@ -66,8 +66,6 @@ int main(void) {
   /* 2: size = 1 → can only NUL-terminate; return strlen(src) */
   res = ft_strlcat(dest, src, 1);
   expected = strlen(src);
-  printf("res: %d | expected: %d | dest[1]: %c\n", res, expected, dest[1]);
-
   check(res == expected && dest[0] == 0 && dest[1] == 'A');
 
   memset(dest, 'A', 10);
