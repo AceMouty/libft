@@ -14,7 +14,7 @@ size_t ft_strlcat(char *dest, const char *src, size_t dsize) {
   // start appending at the end of dest
   i = 0;
   // copy while we have room for at least one more char
-  // leaving space for \0
+  // leaving space for NUL
   while (src[i] && (dlen + i + 1) < dsize) {
     dest[dlen + i] = src[i];
     i++;

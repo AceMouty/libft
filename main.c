@@ -1,16 +1,17 @@
 #include "check.h"
 #include "libft.h"
 #include <assert.h>
-#include <bsd/string.h>
+#include <ctype.h>
+#include <string.h>
 #include <unistd.h>
 
 int main(void) {
   char src[] = "coucou";
   char dest[10];
 
-  // ===================================
-  // ft_strlcpy
-  // ===================================
+  printf("===================================\n");
+  printf("ft_strlcpy\n");
+  printf("===================================\n");
   memset(dest, 'A', 10);
 
   /* 1 */ check(ft_strlcpy(dest, src, 0) == strlen(src) && dest[0] == 'A');
@@ -123,5 +124,42 @@ int main(void) {
   check(res == expected && dest[0] == '1');
 
   memset(dest, 'A', 10);
+
+  printf("===================================\n");
+  printf("ft_toupper\n");
+  printf("===================================\n");
+
+  /* 1 */ check(ft_toupper('a') == toupper('a'));
+  /* 2 */ check(ft_toupper('z') == toupper('z'));
+  /* 3 */ check(ft_toupper('m') == toupper('m'));
+  /* 4 */ check(ft_toupper('A') == toupper('A'));
+  /* 5 */ check(ft_toupper('Z') == toupper('Z'));
+  /* 6 */ check(ft_toupper('0') == toupper('0'));
+  /* 7 */ check(ft_toupper('!') == toupper('!'));
+  /* 8 */ check(ft_toupper(' ') == toupper(' '));
+  /* 9 */ check(ft_toupper(EOF) == toupper(EOF));
+
+  printf("===================================\n");
+  printf("ft_tolower\n");
+  printf("===================================\n");
+  /* 1: uppercase 'A' → 'a' */
+  check(ft_tolower('A') == tolower('A'));
+  /* 2: uppercase 'Z' → 'z' */
+  check(ft_tolower('Z') == tolower('Z'));
+  /* 3: uppercase 'M' → 'm' */
+  check(ft_tolower('M') == tolower('M'));
+  /* 4: lowercase 'a' stays 'a' */
+  check(ft_tolower('a') == tolower('a'));
+  /* 5: lowercase 'z' stays 'z' */
+  check(ft_tolower('z') == tolower('z'));
+  /* 6: digit '0' unchanged */
+  check(ft_tolower('0') == tolower('0'));
+  /* 7: punctuation '!' unchanged */
+  check(ft_tolower('!') == tolower('!'));
+  /* 8: space ' ' unchanged */
+  check(ft_tolower(' ') == tolower(' '));
+  /* 9: EOF must be returned unchanged */
+  check(ft_tolower(EOF) == tolower(EOF));
+
   return 0;
 }
