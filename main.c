@@ -5,6 +5,8 @@
 #include <string.h>
 #include <unistd.h>
 
+void ft_memcmp_test();
+
 int main(void) {
   char src[] = "coucou";
   char dest[10];
@@ -291,5 +293,114 @@ int main(void) {
   /* 9: high-bit byte: ensure unsigned-char behavior */
   /* s3 = {'A', 0x80, 'B', 0} -> search for 0x80 */
   /* 9 */ check(ft_memchr(m3, 0x80, 4) == memchr(m3, 0x80, 4));
+
+  ft_memcmp_test();
   return 0;
+}
+
+void ft_memcmp_test() {
+  printf("===================================\n");
+  printf("ft_memcmp_test\n");
+  printf("===================================\n");
+  int res;
+  int expected;
+
+  /* 1: equal buffers, full length */
+  {
+    char a1[] = "hello";
+    char a2[] = "hello";
+
+    res = ft_memcmp(a1, a2, 5);
+    expected = memcmp(a1, a2, 5);
+    /* 1 */ check((res == 0 && expected == 0) || (res < 0 && expected < 0) ||
+                  (res > 0 && expected > 0));
+  }
+
+  /* 2: difference at first byte */
+  {
+    char a1[] = "hello";
+    char a2[] = "jello";
+
+    res = ft_memcmp(a1, a2, 5);
+    expected = memcmp(a1, a2, 5);
+    /* 2 */ check((res == 0 && expected == 0) || (res < 0 && expected < 0) ||
+                  (res > 0 && expected > 0));
+  }
+
+  /* 3: difference in the middle */
+  {
+    char a1[] = "abcde";
+    char a2[] = "abXde";
+
+    res = ft_memcmp(a1, a2, 5);
+    expected = memcmp(a1, a2, 5);
+    /* 3 */ check((res == 0 && expected == 0) || (res < 0 && expected < 0) ||
+                  (res > 0 && expected > 0));
+  }
+
+  /* 4: difference at the last compared byte */
+  {
+    char a1[] = "abcde";
+    char a2[] = "abcdX";
+
+    res = ft_memcmp(a1, a2, 5);
+    expected = memcmp(a1, a2, 5);
+    /* 4 */ check((res == 0 && expected == 0) || (res < 0 && expected < 0) ||
+                  (res > 0 && expected > 0));
+  }
+
+  /* 5: difference exists, but after n bytes -> equal for given n */
+  {
+    char a1[] = "abcde";
+    char a2[] = "abXde";
+
+    res = ft_memcmp(a1, a2, 2); // only "ab" vs "ab"
+    expected = memcmp(a1, a2, 2);
+    /* 5 */ check((res == 0 && expected == 0) || (res < 0 && expected < 0) ||
+                  (res > 0 && expected > 0));
+  }
+
+  /* 6: n == 0 → must return 0 (equal) */
+  {
+    char a1[] = "hello";
+    char a2[] = "world";
+
+    res = ft_memcmp(a1, a2, 0);
+    expected = memcmp(a1, a2, 0);
+    /* 6 */ check((res == 0 && expected == 0) || (res < 0 && expected < 0) ||
+                  (res > 0 && expected > 0));
+  }
+
+  /* 7: embedded NULs, difference after '\0' must still be seen */
+  {
+    char a1[] = {'a', '\0', 'b', 'c'};
+    char a2[] = {'a', '\0', 'd', 'c'};
+
+    res = ft_memcmp(a1, a2, 4);
+    expected = memcmp(a1, a2, 4);
+    /* 7 */ check((res == 0 && expected == 0) || (res < 0 && expected < 0) ||
+                  (res > 0 && expected > 0));
+  }
+
+  /* 8: high-bit bytes: unsigned-char behavior (first < second) */
+  {
+    unsigned char a1[] = {0x7F, 0x80};
+    unsigned char a2[] = {0x7F, 0xFF};
+
+    res = ft_memcmp(a1, a2, 2);
+    expected = memcmp(a1, a2, 2);
+    /* 8 */ check((res == 0 && expected == 0) || (res < 0 && expected < 0) ||
+                  (res > 0 && expected > 0));
+  }
+
+  /* 9: high-bit bytes: unsigned-char behavior (first > second) */
+  {
+    unsigned char a1[] = {0x7F, 0xFF};
+    unsigned char a2[] = {0x7F, 0x80};
+
+    res = ft_memcmp(a1, a2, 2);
+    expected = memcmp(a1, a2, 2);
+    /* 9 */ check((res == 0 && expected == 0) || (res < 0 && expected < 0) ||
+                  (res > 0 && expected > 0));
+  }
 }
