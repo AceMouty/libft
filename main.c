@@ -55,7 +55,10 @@ int main(void) {
   dest[0] = 0; /* so dest="" initially */
 
   /* 1: size = 0 → nothing appended, return strlen(src) */
-  check(ft_strlcat(dest, src, 0) == strlen(src) && dest[0] == 0);
+  // dest = "", src = "coucou"
+  res = ft_strlcat(dest, src, 0);
+  expected = strlen(src);
+  check(res == expected && dest[0] == 0);
 
   memset(dest, 'A', 10);
   dest[0] = 0;

@@ -8,10 +8,10 @@ size_t ft_strlcat(char *dest, const char *src, size_t size) {
    *
    * [h e l l o . . . . . . ]
    *            ^
-   *           d_idx
+   *           dlen
    * [_ w o r l d \]
    *  ^
-   * s_idx
+   * slen
    *
    * - Append src to the end of dest, but write at most destsize - 1 chars total
    *   into dst (including the original content of dst).
@@ -22,23 +22,23 @@ size_t ft_strlcat(char *dest, const char *src, size_t size) {
    *    - If dstsize > strlen(dst): strlen(dst) + strlen(src)
    *    - If dstsize <= strlen(dst): dstsize + strlen(src)
    *      (this indicates truncation happened)
+   *
+   *      size = 3  (NUL inclu)
+   *      dest = "cccccc"
+   *      src = "coucou"
    */
-  unsigned int slen;
-  unsigned int dlen;
-  int i;
-
-  slen = ft_strlen(src);
-  dlen = 0;
+  size_t dlen;
+  size_t i;
 
   // find dlen but dont go past size
-  while (dlen < size && dest[dlen] != '\0') {
-    dlen++;
-  }
+  dlen = ft_strnlen(dest, size);
 
   // if we "consumed" size bytes without seeing \0
   // dest isnt a proper C string
   if (dlen == size) {
-    return size + slen;
+    return size + ft_strlen(src);
+  } else if (size == 1) {
+    return ft_strlen(src);
   }
 
   // start appending at the end of dest
@@ -49,8 +49,7 @@ size_t ft_strlcat(char *dest, const char *src, size_t size) {
     i++;
   }
 
-  if (dlen + i < size)
-    dest[dlen + i] = '\0';
+  dest[dlen + i] = '\0';
 
-  return dlen + slen;
+  return dlen + ft_strlen(src);
 }
