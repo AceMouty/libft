@@ -1,13 +1,25 @@
 #include "libft.h"
 
-char *ft_strdup(const char *s, size_t n) {
-  size_t slen;
+char *ft_strdup(const char *s) {
   char *cpy;
+  size_t i;
 
-  slen = ft_strlen(s);
-  // +1 to include a spot for NUL termination
-  cpy = (char *)ft_calloc(slen + 1, n);
-  cpy = (char *)ft_memcpy(cpy, s, slen + 1);
+  /* 
+  * allocate s + 1 memory space 
+  * the +1 is for NULL-terminating character
+  * since ft_strlen does not include NULL-termination in the result
+  */
+  cpy = (char *) malloc(ft_strlen(s) + 1);
+  if(!cpy)
+    return NULL;
+
+  // loop and copy over data from s to 
+  i = 0;
+  while(s[i])
+  {
+    cpy[i] = s[i];
+    i++;
+  }
 
   return cpy;
 }

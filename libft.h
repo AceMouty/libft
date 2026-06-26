@@ -3,6 +3,7 @@
 #include <stddef.h>
 #include <stdlib.h>
 
+// lib c (core)
 char *ft_strchr(const char *s, int c);
 char *ft_strnstr(const char *str1, const char *str2, size_t len);
 char *ft_strrchr(const char *s, int c);
@@ -26,5 +27,17 @@ void *ft_memset(void *s, int c, size_t n);
 void ft_bzero(void *s, size_t n);
 int ft_isspace(int c);
 void *ft_calloc(size_t nelem, size_t size);
-char *ft_strdup(const char *s, size_t n);
+char *ft_strdup(const char *s);
+// bonus functions
+char *ft_substr(const char *s, unsigned int start, size_t len);
+char *ft_strjoin(const char *s1, const char *s2);
+char *ft_strtrim(const char *s, const char *set);
+char **ft_split(char const *s, char c);
+char *ft_itoa(int n);
+char *ft_strmapi(char const *s, char (*callback_ptr)(unsigned int, char));
+void ft_striteri(char *s, void (*callback_ptr)(unsigned int, char*));
+void ft_putchar_fd(char c, int fd);
+void ft_putstr_fd(char *str, int fd);
+void ft_putendl_fd(char *str, int fd);
+void ft_putnbr_fd(int n, int fd);
 #endif
