@@ -3,11 +3,12 @@ void *ft_memmove(void *dest, const void *src, size_t n) {
   const unsigned char *src_ptr;
   unsigned char *dest_ptr;
 
-  if (!src && !dest) {
+  if (!src && !dest) 
     return NULL;
-  } else if (dest == src || n == 0) {
+ 
+  if (dest == src || n == 0) 
     return dest;
-  }
+  
 
   src_ptr = src;
   dest_ptr = dest;
@@ -23,6 +24,14 @@ void *ft_memmove(void *dest, const void *src, size_t n) {
       *dest_ptr++ = *src_ptr++;
     }
   } else {
+    /*
+     * dest_ptr and src_ptr currently point to the START of their regions.
+     *
+     * Because we are copying backward, we need to start from the END.
+     * Adding n moves both pointers one byte past the last byte to copy.
+     */
+    dest_ptr += n;
+    src_ptr += n;
     while (n--) {
       *--dest_ptr = *--src_ptr;
     }

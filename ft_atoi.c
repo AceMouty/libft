@@ -14,18 +14,19 @@ int ft_atoi(const char *cptr) {
     i++;
   }
 
-  if (cptr[i] == '+' && cptr[i - 1] != '-') {
+  if (cptr[i] == '+' || cptr[i] == '-')
+  {
+    if (cptr[i] == '-')
+      sign = -1;
     i++;
   }
 
-  if (cptr[i] == '-') {
-    sign = -1;
-    i++;
-  }
-
-  while (cptr[i] && cptr[i] >= 48 && cptr[i] <= 57) {
+  // using the chars here is a ASCII trick
+  // the comparison and math operates on the backing number value
+  // of the char(s)
+  while (cptr[i] && cptr[i] >= '0' && cptr[i] <= '9') {
     result *= 10;
-    result += cptr[i] - 48;
+    result += cptr[i] - '0';
     i++;
   }
 

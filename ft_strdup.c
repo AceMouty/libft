@@ -21,5 +21,7 @@ char *ft_strdup(const char *s) {
     i++;
   }
 
+  cpy[i] = '\0';
+
   return cpy;
 }

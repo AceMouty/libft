@@ -13,9 +13,5 @@ char *ft_strrchr(const char *s, int c) {
     }
   }
 
-  if (s[slen] == target) { // slen is 0
-    return (char *)&s[slen];
-  }
-
   return NULL;
 }

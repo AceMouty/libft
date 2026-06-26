@@ -1,6 +1,12 @@
 NAME = libft.a
+
 CC = clang
 CFLAGS = -Wall -Wextra -Werror -I.
+
+AR = ar
+ARFLAGS = rsc 
+# r: replace | s: index | c: copy
+
 SRC = $(filter-out $(TEST_SRC),$(wildcard *.c))
 OBJ = $(SRC:.c=.o)
 TEST_BIN = test_lib
@@ -11,7 +17,7 @@ all: $(NAME)
 
 # build static lib from object files
 $(NAME): $(OBJ)
-	ar rcs $(NAME) $(OBJ)
+	$(AR) $(ARFLAGS) $(NAME) $(OBJ)
 
 # Rule to compile each .c -> .o
 %.o: %.c libft.h
