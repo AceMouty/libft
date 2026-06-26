@@ -5,7 +5,7 @@
 // also, these are implementation details and should not be exposed
 static size_t wordscount(char const *s, char c);
 // delimiter-aware strlen
-static size_t wordlen(char const *s, char c);
+static size_t word_len(char const *s, char c);
 static char *subword(char const *s, char c);
 static void freesplit(char **split);
 
