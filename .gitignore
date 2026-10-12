@@ -1,3 +1,7 @@
 *.o
 *.a
 test_lib
+lib/
+include/libft/ft_printf.h
+include/libft/get_next_line.h
+compile_commands.json
